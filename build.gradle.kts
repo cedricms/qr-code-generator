@@ -23,6 +23,8 @@ repositories {
 dependencies {
     // This dependency is used by the application.
     implementation("com.google.guava:guava:28.2-jre")
+    implementation("org.apache.logging.log4j:log4j-api:2.17.1")
+    implementation("org.apache.logging.log4j:log4j-core:2.17.1")
 
     // Use JUnit test framework
     testImplementation("junit:junit:4.12")
@@ -30,5 +32,5 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClassName = "com.mariasube.cedric.qr.code.generator.App"
+    mainClassName = "com.mariasube.cedric.qr.code.generator.QrCodeGenerator"
 }

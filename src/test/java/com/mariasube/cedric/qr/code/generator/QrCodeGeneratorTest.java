@@ -4,6 +4,11 @@ import com.mariasube.cedric.qr.code.generator.exception.parameter.NoParameterExc
 import com.mariasube.cedric.qr.code.generator.exception.parameter.ParameterException;
 import com.mariasube.cedric.qr.code.generator.exception.parameter.TooManyParametersException;
 import org.junit.Test;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 import static org.junit.Assert.*;
 
 public class QrCodeGeneratorTest {
@@ -42,5 +47,89 @@ public class QrCodeGeneratorTest {
 
         // Then
         qrCodeGenerator.validateParameters(parameters);
+    }
+
+    @Test
+    public void generateQrCodeImageGivenNullTextThenNullBufferedImage() throws IOException {
+        // Given
+        QrCodeGenerator qrCodeGenerator = new QrCodeGenerator();
+        String text = null;
+
+        // When
+        BufferedImage bufferedImage = qrCodeGenerator.generateQrCodeImage(text);
+
+        // Then
+        assertTrue(bufferedImage == null);
+    }
+
+    @Test
+    public void generateQrCodeImageGivenTextThenBufferedImage() throws IOException {
+        // Given
+        QrCodeGenerator qrCodeGenerator = new QrCodeGenerator();
+        String text = "Awesome text to encode as a QR!!!";
+
+        // When
+        BufferedImage bufferedImage = qrCodeGenerator.generateQrCodeImage(text);
+
+        // Then
+        assertTrue(bufferedImage != null);
+    }
+
+    @Test
+    public void createImageFileGivenNullImageAndNullFilePathThenNull() throws IOException {
+        // Given
+        QrCodeGenerator qrCodeGenerator = new QrCodeGenerator();
+        BufferedImage bufferedImage = null;
+        String filePath = null;
+
+        // When
+        File imageFile = qrCodeGenerator.createImageFile(bufferedImage, filePath);
+
+        // Then
+        assertTrue(imageFile == null);
+    }
+
+    @Test
+    public void createImageFileGivenImageAndNullFilePathThenNull() throws IOException {
+        // Given
+        QrCodeGenerator qrCodeGenerator = new QrCodeGenerator();
+        String text = "Some awewsome text.";
+        BufferedImage bufferedImage = qrCodeGenerator.generateQrCodeImage(text);
+        String filePath = null;
+
+        // When
+        File imageFile = qrCodeGenerator.createImageFile(bufferedImage, filePath);
+
+        // Then
+        assertTrue(imageFile == null);
+    }
+
+    @Test
+    public void createImageFileGivenNullImageAndFilePathThenNull() throws IOException {
+        // Given
+        QrCodeGenerator qrCodeGenerator = new QrCodeGenerator();
+        BufferedImage bufferedImage = null;
+        String filePath = "./test/qrCode.png";
+
+        // When
+        File imageFile = qrCodeGenerator.createImageFile(bufferedImage, filePath);
+
+        // Then
+        assertTrue(imageFile == null);
+    }
+
+    @Test
+    public void createImageFileGivenImageAndFilePathThenFile() throws IOException {
+        // Given
+        QrCodeGenerator qrCodeGenerator = new QrCodeGenerator();
+        String text = "Some even more awewsome text.";
+        BufferedImage bufferedImage = qrCodeGenerator.generateQrCodeImage(text);
+        String filePath = "./test/qrCode.png";
+
+        // When
+        File imageFile = qrCodeGenerator.createImageFile(bufferedImage, filePath);
+
+        // Then
+        assertTrue(imageFile != null);
     }
 }

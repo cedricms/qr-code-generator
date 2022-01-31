@@ -25,6 +25,7 @@ dependencies {
     implementation("com.google.guava:guava:28.2-jre")
     implementation("org.apache.logging.log4j:log4j-api:2.17.1")
     implementation("org.apache.logging.log4j:log4j-core:2.17.1")
+    implementation("net.glxn.qrgen:javase:2.0")
 
     // Use JUnit test framework
     testImplementation("junit:junit:4.12")

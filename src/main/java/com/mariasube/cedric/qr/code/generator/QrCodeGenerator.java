@@ -88,13 +88,22 @@ public class QrCodeGenerator {
         if (text == null) {
             return null;
         } else {
+            int imageSize = calculateImageSizeFromText(text);
             ByteArrayOutputStream stream = QRCode
                     .from(text)
-                    .withSize(250, 250)
+                    .withSize(imageSize, imageSize)
                     .stream();
             ByteArrayInputStream bis = new ByteArrayInputStream(stream.toByteArray());
 
             return ImageIO.read(bis);
+        }
+    }
+
+    public int calculateImageSizeFromText(String text) {
+        if (text == null) {
+            return 100;
+        } else {
+            return (((int) (text.length() / 5)) + 100);
         }
     }
 

@@ -119,17 +119,90 @@ public class QrCodeGeneratorTest {
     }
 
     @Test
-    public void createImageFileGivenImageAndFilePathThenFile() throws IOException {
+    public void createImageFileGivenImageAndFilePathWithShortTextThenFile() throws IOException {
         // Given
         QrCodeGenerator qrCodeGenerator = new QrCodeGenerator();
-        String text = "Some even more awewsome text.";
+        String text = "Some even more awesome text.";
         BufferedImage bufferedImage = qrCodeGenerator.generateQrCodeImage(text);
-        String filePath = "./test/qrCode.png";
+        String filePath = "./test/qrCode_short-text.png";
 
         // When
         File imageFile = qrCodeGenerator.createImageFile(bufferedImage, filePath);
 
         // Then
         assertTrue(imageFile != null);
+    }
+
+    @Test
+    public void createImageFileGivenImageAndFilePathWithLongTextThenFile() throws IOException {
+        // Given
+        QrCodeGenerator qrCodeGenerator = new QrCodeGenerator();
+        String text = "First line.\n"
+                + "Second line.\n"
+                + "And another line.\n"
+                + "Let's wrap it up.";
+        BufferedImage bufferedImage = qrCodeGenerator.generateQrCodeImage(text);
+        String filePath = "./test/qrCode_long-text.png";
+
+        // When
+        File imageFile = qrCodeGenerator.createImageFile(bufferedImage, filePath);
+
+        // Then
+        assertTrue(imageFile != null);
+    }
+
+    @Test
+    public void calculateImageSizeFromTextGivenNullTextThen100() {
+        // Given
+        QrCodeGenerator qrCodeGenerator = new QrCodeGenerator();
+        String text = null;
+
+        // When
+        int imageSize = qrCodeGenerator.calculateImageSizeFromText(text);
+
+        // Then
+        assertTrue(imageSize == 100);
+    }
+
+    @Test
+    public void calculateImageSizeFromTextGivenEmptyTextThen100() {
+        // Given
+        QrCodeGenerator qrCodeGenerator = new QrCodeGenerator();
+        String text = "";
+
+        // When
+        int imageSize = qrCodeGenerator.calculateImageSizeFromText(text);
+
+        // Then
+        assertTrue(imageSize == 100);
+    }
+
+    @Test
+    public void calculateImageSizeFromTextGivenShortTextThen101() {
+        // Given
+        QrCodeGenerator qrCodeGenerator = new QrCodeGenerator();
+        String text = "Short text";
+
+        // When
+        int imageSize = qrCodeGenerator.calculateImageSizeFromText(text);
+
+        // Then
+        assertTrue(imageSize == 102);
+    }
+
+    @Test
+    public void calculateImageSizeFromTextGivenLongTextThen100() {
+        // Given
+        QrCodeGenerator qrCodeGenerator = new QrCodeGenerator();
+        String text = "First line.\n"
+                + "Second line.\n"
+                + "And another line.\n"
+                + "Let's wrap it up.";
+
+        // When
+        int imageSize = qrCodeGenerator.calculateImageSizeFromText(text);
+
+        // Then
+        assertTrue(imageSize == 112);
     }
 }

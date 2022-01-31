@@ -108,7 +108,7 @@ public class QrCodeGenerator {
     }
 
     public void validateParameters(String[] parameters) throws ParameterException {
-        if (parameters == null) {
+        if ((parameters == null) || (parameters.length == 0)) {
             throw new NoParameterException();
         } else if (parameters.length >= 2) {
             throw new TooManyParametersException();
